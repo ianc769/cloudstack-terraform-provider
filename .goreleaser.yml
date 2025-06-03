@@ -58,7 +58,7 @@ signs:
 release:
   disable: false
   github:
-      owner: cloudstack
-      name: terraform-provider-cloudstack
+      owner: ianc769
+      name: cloudstack-terraform-provider
 changelog:
   skip: true
