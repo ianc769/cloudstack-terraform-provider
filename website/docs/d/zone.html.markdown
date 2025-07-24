@@ -10,7 +10,7 @@ description: |-
 
 Use this datasource to get information about a zone for use in other resources.
 
-### Example Usage
+## Example Usage
 
 ```hcl
   data "cloudstack_zone" "zone-data-source"{
@@ -33,3 +33,14 @@ The following attributes are exported:
 * `dns1` - The first DNS for the Zone.
 * `internal_dns1` - The first internal DNS for the Zone.
 * `network_type` - The network type of the zone; can be Basic or Advanced.
+* `dns2` - The second DNS for the Zone.
+* `internal_dns2` - The second internal DNS for the Zone.
+* `ip6_dns1` - The first IPv6 DNS for the Zone.
+* `ip6_dns2` - The second IPv6 DNS for the Zone.
+* `guest_cidr_address` - The guest CIDR address for the Zone.
+* `domain` - The domain for the Zone.
+* `domain_id` - The domain ID for the Zone.
+* `network_domain` - The network domain for the Zone.
+* `local_storage_enabled` - Whether local storage is enabled for the Zone.
+* `security_group_enabled` - Whether security groups are enabled for the Zone.
+* `allocation_state` - The allocation state of the Zone.

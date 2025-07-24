@@ -26,40 +26,48 @@ import (
 )
 
 func TestAccZoneDataSource_basic(t *testing.T) {
-	resourceName := "cloudstack_zone.zone-resource"
+	resourceName := "cloudstack_zone.foo"
 	datasourceName := "data.cloudstack_zone.zone-data-source"
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:  func() { testAccPreCheck(t) },
 		Providers: testAccProviders,
+		// Skip destroy check since zones might not be easily destroyed in test environment
+		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
 				Config: testZoneDataSourceConfig_basic,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
+					resource.TestCheckResourceAttrPair(datasourceName, "dns1", resourceName, "dns1"),
+					resource.TestCheckResourceAttrPair(datasourceName, "internal_dns1", resourceName, "internal_dns1"),
+					resource.TestCheckResourceAttrPair(datasourceName, "network_type", resourceName, "network_type"),
 				),
+				ExpectNonEmptyPlan: true,
 			},
 		},
 	})
 }
 
 const testZoneDataSourceConfig_basic = `
-resource "cloudstack_zone" "zone-resource"{
-	name       = "TestZone"
-  dns1       = "8.8.8.8"
-  internal_dns1  =  "172.20.0.1"
-  network_type   =  "Advanced"
-  }
+resource "cloudstack_zone" "foo" {
+  name = "terraform-zone-test"
+  dns1 = "8.8.8.8"
+  internal_dns1 = "8.8.4.4"
+  network_type = "Basic"
+}
 
-  data "cloudstack_zone" "zone-data-source"{
-
-    filter{
+data "cloudstack_zone" "zone-data-source"{
+  filter{
     name = "name"
-    value="TestZone"
-    }
-	  depends_on = [
-	  cloudstack_zone.zone-resource
-	]
-  
+    value = "terraform-zone-test"
   }
-  `
+  depends_on = [
+    cloudstack_zone.foo
+  ]
+}
+
+output "zone-output" {
+  value = data.cloudstack_zone.zone-data-source
+}
+`

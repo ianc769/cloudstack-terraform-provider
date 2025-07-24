@@ -53,6 +53,51 @@ func dataSourceCloudStackZone() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			// Optional parameters as computed fields
+			"dns2": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"internal_dns2": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ip6_dns1": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ip6_dns2": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"guest_cidr_address": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"domain": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"domain_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"network_domain": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"local_storage_enabled": {
+				Type:     schema.TypeBool,
+				Computed: true,
+			},
+			"security_group_enabled": {
+				Type:     schema.TypeBool,
+				Computed: true,
+			},
+			"allocation_state": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -92,6 +137,19 @@ func zoneDescriptionAttributes(d *schema.ResourceData, zone *cloudstack.Zone) er
 	d.Set("dns1", zone.Dns1)
 	d.Set("internal_dns1", zone.Internaldns1)
 	d.Set("network_type", zone.Networktype)
+
+	// Set optional parameters
+	d.Set("dns2", zone.Dns2)
+	d.Set("internal_dns2", zone.Internaldns2)
+	d.Set("ip6_dns1", zone.Ip6dns1)
+	d.Set("ip6_dns2", zone.Ip6dns2)
+	d.Set("guest_cidr_address", zone.Guestcidraddress)
+	d.Set("domain", zone.Domain)
+	d.Set("domain_id", zone.Domainid)
+	// Note: The Networkdomain field is not available in the SDK
+	d.Set("local_storage_enabled", zone.Localstorageenabled)
+	d.Set("security_group_enabled", zone.Securitygroupsenabled)
+	d.Set("allocation_state", zone.Allocationstate)
 
 	return nil
 }
