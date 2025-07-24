@@ -34,7 +34,7 @@ The following arguments are supported:
 * `name` - (Required) The name of the zone.
 * `dns1` - (Required) The DNS server 1 for the zone.
 * `internal_dns1` - (Required) The internal DNS server 1 for the zone.
-* `network_type` - (Required) The type of network to use for the zone.
+* `network_type` - (Required, ForceNew) The type of network to use for the zone. Changing this forces a new resource to be created.
 * `dns2` - (Optional) The DNS server 2 for the zone.
 * `internal_dns2` - (Optional) The internal DNS server 2 for the zone.
 * `ip6_dns1` - (Optional) The IPv6 DNS server 1 for the zone.
@@ -44,7 +44,7 @@ The following arguments are supported:
 * `domain_id` - (Optional) The domain ID for the zone.
 * `network_domain` - (Optional) The network domain for the zone.
 * `local_storage_enabled` - (Optional) Whether local storage is enabled for the zone.
-* `security_group_enabled` - (Optional) Whether security groups are enabled for the zone.
+* `security_group_enabled` - (Optional, ForceNew) Whether security groups are enabled for the zone. Changing this forces a new resource to be created.
 * `allocation_state` - (Optional) The allocation state of the zone.
 
 ## Attributes Reference

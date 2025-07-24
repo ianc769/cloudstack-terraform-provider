@@ -52,6 +52,7 @@ func resourceCloudStackZone() *schema.Resource {
 			"network_type": {
 				Type:     schema.TypeString,
 				Required: true,
+				ForceNew: true,
 			},
 			// Optional parameters
 			"dns2": {
@@ -103,6 +104,7 @@ func resourceCloudStackZone() *schema.Resource {
 				Type:     schema.TypeBool,
 				Optional: true,
 				Computed: true,
+				ForceNew: true,
 			},
 			"allocation_state": {
 				Type:     schema.TypeString,
