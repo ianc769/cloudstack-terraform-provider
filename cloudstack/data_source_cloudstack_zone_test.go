@@ -43,7 +43,8 @@ func TestAccZoneDataSource_basic(t *testing.T) {
 					resource.TestCheckResourceAttrPair(datasourceName, "internal_dns1", resourceName, "internal_dns1"),
 					resource.TestCheckResourceAttrPair(datasourceName, "network_type", resourceName, "network_type"),
 				),
-				ExpectNonEmptyPlan: true,
+				// Don't expect a non-empty plan as this is a data source test
+				ExpectNonEmptyPlan: false,
 			},
 		},
 	})
