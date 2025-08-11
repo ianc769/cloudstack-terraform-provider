@@ -37,6 +37,34 @@ func TestAccZoneDataSource_basic(t *testing.T) {
 				Config: testZoneDataSourceConfig_basic,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
+					resource.TestCheckResourceAttrPair(datasourceName, "dns1", resourceName, "dns1"),
+					resource.TestCheckResourceAttrPair(datasourceName, "internal_dns1", resourceName, "internal_dns1"),
+					resource.TestCheckResourceAttrPair(datasourceName, "network_type", resourceName, "network_type"),
+				),
+			},
+		},
+	})
+}
+
+func TestAccZoneDataSource_extended(t *testing.T) {
+	resourceName := "cloudstack_zone.zone-resource"
+	datasourceName := "data.cloudstack_zone.zone-data-source"
+
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testZoneDataSourceConfig_extended,
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
+					resource.TestCheckResourceAttrPair(datasourceName, "dns1", resourceName, "dns1"),
+					resource.TestCheckResourceAttrPair(datasourceName, "dns2", resourceName, "dns2"),
+					resource.TestCheckResourceAttrPair(datasourceName, "internal_dns1", resourceName, "internal_dns1"),
+					resource.TestCheckResourceAttrPair(datasourceName, "internaldns2", resourceName, "internaldns2"),
+					resource.TestCheckResourceAttrPair(datasourceName, "network_type", resourceName, "network_type"),
+					resource.TestCheckResourceAttrPair(datasourceName, "guestcidraddress", resourceName, "guestcidraddress"),
+					resource.TestCheckResourceAttrPair(datasourceName, "localstorageenabled", resourceName, "localstorageenabled"),
 				),
 			},
 		},
@@ -44,22 +72,43 @@ func TestAccZoneDataSource_basic(t *testing.T) {
 }
 
 const testZoneDataSourceConfig_basic = `
-resource "cloudstack_zone" "zone-resource"{
-	name       = "TestZone"
-  dns1       = "8.8.8.8"
-  internal_dns1  =  "172.20.0.1"
-  network_type   =  "Advanced"
-  }
+resource "cloudstack_zone" "zone-resource" {
+  name = "TestZone"
+  dns1 = "8.8.8.8"
+  internal_dns1 = "172.20.0.1"
+  network_type = "Advanced"
+}
 
-  data "cloudstack_zone" "zone-data-source"{
-
-    filter{
+data "cloudstack_zone" "zone-data-source" {
+  filter {
     name = "name"
-    value="TestZone"
-    }
-	  depends_on = [
-	  cloudstack_zone.zone-resource
-	]
-  
+    value = "TestZone"
   }
-  `
+  depends_on = [
+    cloudstack_zone.zone-resource
+  ]
+}
+`
+
+const testZoneDataSourceConfig_extended = `
+resource "cloudstack_zone" "zone-resource" {
+  name = "TestZoneExtended"
+  dns1 = "8.8.8.8"
+  dns2 = "8.8.4.4"
+  internal_dns1 = "172.20.0.1"
+  internaldns2 = "172.20.0.2"
+  network_type = "Advanced"
+  guestcidraddress = "10.1.1.0/24"
+  localstorageenabled = true
+}
+
+data "cloudstack_zone" "zone-data-source" {
+  filter {
+    name = "name"
+    value = "TestZoneExtended"
+  }
+  depends_on = [
+    cloudstack_zone.zone-resource
+  ]
+}
+`
