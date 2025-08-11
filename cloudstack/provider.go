@@ -91,6 +91,7 @@ func Provider() *schema.Provider {
 			"cloudstack_vpn_connection":   dataSourceCloudstackVPNConnection(),
 			"cloudstack_pod":              dataSourceCloudstackPod(),
 			"cloudstack_domain":           dataSourceCloudstackDomain(),
+			"cloudstack_limits":           dataSourceCloudStackLimits(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -106,6 +107,7 @@ func Provider() *schema.Provider {
 			"cloudstack_ipaddress":            resourceCloudStackIPAddress(),
 			"cloudstack_kubernetes_cluster":   resourceCloudStackKubernetesCluster(),
 			"cloudstack_kubernetes_version":   resourceCloudStackKubernetesVersion(),
+			"cloudstack_limits":               resourceCloudStackLimits(),
 			"cloudstack_loadbalancer_rule":    resourceCloudStackLoadBalancerRule(),
 			"cloudstack_network":              resourceCloudStackNetwork(),
 			"cloudstack_network_acl":          resourceCloudStackNetworkACL(),
