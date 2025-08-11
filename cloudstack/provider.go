@@ -132,6 +132,7 @@ func Provider() *schema.Provider {
 			"cloudstack_account":              resourceCloudStackAccount(),
 			"cloudstack_user":                 resourceCloudStackUser(),
 			"cloudstack_domain":               resourceCloudStackDomain(),
+			"cloudstack_tags":                 resourceCloudStackTags(),
 		},
 
 		ConfigureFunc: providerConfigure,
