@@ -138,6 +138,7 @@ func Provider() *schema.Provider {
 			"cloudstack_physicalnetwork":          resourceCloudStackPhysicalNetwork(),
 			"cloudstack_traffic_type":             resourceCloudStackTrafficType(),
 			"cloudstack_network_service_provider": resourceCloudStackNetworkServiceProvider(),
+			"cloudstack_project":                  dataSourceCloudstackProject(),
 		},
 
 		ConfigureFunc: providerConfigure,
