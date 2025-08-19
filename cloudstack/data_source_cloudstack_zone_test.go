@@ -32,8 +32,6 @@ func TestAccZoneDataSource_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:  func() { testAccPreCheck(t) },
 		Providers: testAccProviders,
-		// Skip destroy check since zones might not be easily destroyed in test environment
-		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
 				Config: testZoneDataSourceConfig_basic,
@@ -43,8 +41,6 @@ func TestAccZoneDataSource_basic(t *testing.T) {
 					resource.TestCheckResourceAttrPair(datasourceName, "internal_dns1", resourceName, "internal_dns1"),
 					resource.TestCheckResourceAttrPair(datasourceName, "network_type", resourceName, "network_type"),
 				),
-				// Don't expect a non-empty plan as this is a data source test
-				ExpectNonEmptyPlan: false,
 			},
 		},
 	})
