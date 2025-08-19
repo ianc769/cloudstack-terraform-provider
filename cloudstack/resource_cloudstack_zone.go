@@ -184,14 +184,14 @@ func resourceCloudStackZoneCreate(d *schema.ResourceData, meta interface{}) erro
 
 func resourceCloudStackZoneRead(d *schema.ResourceData, meta interface{}) error {
 	cs := meta.(*cloudstack.CloudStackClient)
-	log.Printf("[DEBUG] Retrieving Zone %s", d.Get("name").(string))
+	log.Printf("[DEBUG] Retrieving Zone %s", d.Id())
 
-	// Get the Zone details
-	z, count, err := cs.Zone.GetZoneByName(d.Get("name").(string))
+	// Get the Zone details by ID instead of name
+	z, count, err := cs.Zone.GetZoneByID(d.Id())
 
 	if err != nil {
 		if count == 0 {
-			log.Printf("[DEBUG] Zone %s does no longer exist", d.Get("name").(string))
+			log.Printf("[DEBUG] Zone %s does no longer exist", d.Id())
 			d.SetId("")
 			return nil
 		}
